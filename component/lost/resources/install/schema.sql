@@ -1,5 +1,6 @@
 CREATE TABLE `lost_objects` (
   `lost_object_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `categories_category_id` int(11) DEFAULT NULL,
   `lost_brand_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
