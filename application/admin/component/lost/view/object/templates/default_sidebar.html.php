@@ -30,3 +30,18 @@
         </div>
     </div>
 </fieldset>
+
+<fieldset>
+    <legend><?= translate('Category') ?></legend>
+    <?= helper('com:categories.radiolist.categories', array('row' => $object, 'uncategorised' => false)) ?>
+</fieldset>
+
+<? if($object->isAttachable()) : ?>
+<fieldset>
+    <legend><?= translate('Attachments') ?></legend>
+    <? if (!$object->isNew()) : ?>
+        <?= import('com:attachments.view.attachments.list.html', array('attachments' => $object->getAttachments())) ?>
+    <? endif ?>
+    <?= import('com:attachments.view.attachments.upload.html') ?>
+</fieldset>
+<? endif ?>

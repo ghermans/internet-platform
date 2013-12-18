@@ -17,6 +17,7 @@ class DatabaseTableObjects extends Library\DatabaseTableAbstract
         $config->append(array(
             'behaviors'    =>  array(
                 'sluggable', 'lockable', 'creatable', 'modifiable',
+                'com:attachments.database.behavior.attachable',
             ),
             'filters' => array(
                 'text'   => array('html', 'tidy')

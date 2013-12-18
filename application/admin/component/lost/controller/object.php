@@ -15,7 +15,8 @@ class LostControllerObject extends Library\ControllerModel
     {
         $config->append(array(
         	'behaviors' => array(
-                'editable'
+                'editable',
+                'com:attachments.controller.behavior.attachable'
             ),
         ));
     
