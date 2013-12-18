@@ -11,9 +11,15 @@
 <fieldset>
     <legend><?= translate('Details') ?></legend>
     <div>
-        <label for="published"><?= translate('Published') ?></label>
+        <label for="reference"><?= translate('Reference') ?></label>
         <div>
             <input type="text" name="reference" value="<?= $object->reference ?>" />
+        </div>
+    </div>
+    <div>
+        <label for="date"><?= translate('Date found') ?></label>
+        <div class="controls">
+            <input type="date" name="date" value="<?= $object->date ?>" />
         </div>
     </div>
     <div>
