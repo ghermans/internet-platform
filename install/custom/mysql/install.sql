@@ -1438,7 +1438,7 @@ CREATE TABLE `lost_brands` (
 # Dump of table lost_brands
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `lost_brands`;
+DROP TABLE IF EXISTS `lost_objects`;
 
 CREATE TABLE `lost_objects` (
   `lost_object_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
