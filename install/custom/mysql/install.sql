@@ -370,7 +370,9 @@ VALUES
 	(41,'Police','com_police','',1),
 	(42,'Zendesk','com_zendesk','',1),
 	(43,'About','com_about','',1),
-	(44,'Uploads','com_uploads','',1);
+	(44,'Uploads','com_uploads','',1),
+	(45,'Fora','com_fora','',1),
+	(46,'Lost','com_lost','',1);
 
 /*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1411,4 +1413,48 @@ CREATE TABLE `data`.`streets_cities` (
   `language` varchar(2) DEFAULT NULL,
   `police_zone_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`streets_city_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+# Dump of table users_groups_users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `lost_brands`;
+
+CREATE TABLE `lost_brands` (
+  `lost_brand_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `created_by` int(11) unsigned DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `modified_by` int(11) unsigned DEFAULT NULL,
+  `modified_on` datetime DEFAULT NULL,
+  `locked_by` int(11) unsigned DEFAULT NULL,
+  `locked_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`lost_brand_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+# Dump of table lost_brands
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `lost_brands`;
+
+CREATE TABLE `lost_objects` (
+  `lost_object_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `categories_category_id` int(11) DEFAULT NULL,
+  `lost_brand_id` int(11) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `text` mediumtext NOT NULL,
+  `reference` varchar(250) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `created_by` int(11) unsigned DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `modified_by` int(11) unsigned DEFAULT NULL,
+  `modified_on` datetime DEFAULT NULL,
+  `locked_by` int(11) unsigned DEFAULT NULL,
+  `locked_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`lost_object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
