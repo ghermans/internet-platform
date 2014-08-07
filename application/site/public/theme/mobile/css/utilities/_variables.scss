@@ -23,54 +23,71 @@ $color805: #F8AAA8;
 $color5425: #6E96A7;
 $color5455: #D6E2DF;
 
-$gray:      #505050;
+// Grays
+// -------------------------
+$black: #000 !default;
+$grayDarker: #222 !default;
+$grayDark: #333 !default;
+$gray: #505050 !default;
+$grayLight: #999 !default;
+$grayLighter: #eee !default;
+$white: #fff !default;
 
 
-/*
- * Bootstrap variables
- */
+// Breakpoints
+// -------------------------
+$breakpoint-alpha: 400px;
+$breakpoint-beta: 600px;
+$breakpoint-charlie: 768px;
+$breakpoint-delta: 1024px;
 
-$bodyBackground:        $grayLighter;
 
-$textColor: 			$grayDarker;
+$font-size: 16px;
+$font-family: Helvetica, sans-serif;
+$line-height: 1.5em;
 
-$sansFontFamily:        Helvetica, sans-serif;
-$serifFontFamily:       Georgia, "Times New Roman", Times, serif;
-$monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
+$color-background-well: #F8F8F8;
+$color-background-body: $grayLighter;
+$color-background-table-accent: #f9f9f9 !default;
 
-$baseFontSize:          14px;
-$baseLineHeight:        22px;
+$color-border: #eee;
+$color-border-well: $color-border;
+$color-border-input: #ccc !default;
 
-$linkColor:             $blue;
+$color-text: $grayDarker;
 
-$iconSpritePath:          "../img/glyphicons-halflings.png";
-$iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+$color-link: $blue;
+$color-link-hover: darken($color-link, 15%) !default;
+
+$border-radius: 4px !default;
+
 
 // Navbar
 // -------------------------
-$navbarCollapseWidth:             767px;
-$navbarCollapseDesktopWidth:      $navbarCollapseWidth + 1;
+$navbarHeight: 58px;
+$navbarBackgroundHighlight: lighten($blue, 12%);
+$navbarBackground: lighten($blue, 3%);
+$navbarBorder: darken($navbarBackground, 16%);
 
-$navbarHeight:                    32px;
-$navbarBackgroundHighlight:       lighten($blue, 12%);
-$navbarBackground:                lighten($blue, 3%);
-$navbarBorder:                    darken($navbarBackground, 16%);
+$navbarText: $white;
+$navbarLinkColor: $white;
+$navbarLinkColorHover: $white;
+$navbarLinkColorActive: $white;
+$navbarLinkBackgroundHover: lighten($blue, 12%);
+$navbarLinkBackgroundActive: darken($navbarBackground, 8%);
 
-$navbarText:                      $white;
-$navbarLinkColor:                 $white;
-$navbarLinkColorHover:            $white;
-$navbarLinkColorActive:           $white;
-$navbarLinkBackgroundHover:       lighten($blue, 12%);
-$navbarLinkBackgroundActive:      darken($navbarBackground, 8%);
+$navbarBrandColor: $navbarLinkColor;
 
-$navbarBrandColor:                $navbarLinkColor;
-
-$gridColumnWidth:         50px;
-$gridGutterWidth:         30px;
-
-$fluidGridColumnWidth:    percentage($gridColumnWidth/$gridRowWidth);
-$fluidGridGutterWidth:    percentage($gridGutterWidth/$gridRowWidth);
 
 // Wells
 // -------------------------
-$wellBackground:    #F8F8F8;
+
+$gutter-width: 3em;
+$grid-padding: 25px;
+
+// Susy grid
+$susy: (
+  gutters: $gutter-width/4em,
+  gutter-position: before
+);
+

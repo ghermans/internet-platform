@@ -43,7 +43,7 @@ class ModelContacts extends Library\ModelTable
 	{
 		parent::_buildQueryJoins($query);
 		
-		$query->join(array('categories' => 'categories'), 'categories.categories_category_id = tbl.categories_category_id');
+		$query->join(array('categories' => 'contacts_categories'), 'categories.contacts_category_id = tbl.contacts_category_id');
 	}
 
 	protected function _buildQueryWhere(Library\DatabaseQuerySelect $query)
@@ -56,11 +56,11 @@ class ModelContacts extends Library\ModelTable
 		}
 
 		if ($state->category) {
-			$query->where('tbl.categories_category_id = :category')->bind(array('category' => (int) $state->category));
+			$query->where('tbl.contacts_category_id = :category')->bind(array('category' => (int) $state->category));
 		}
 
 		if ($state->search) {
-			$query->where('tbl.name LIKE :search')->bind(array('search' => '%'.$state->search.'%'));
+			$query->where('tbl.title LIKE :search')->bind(array('search' => '%'.$state->search.'%'));
 		}
 		
 		if (is_numeric($state->access)) {

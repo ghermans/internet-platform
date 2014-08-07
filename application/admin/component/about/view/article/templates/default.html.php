@@ -20,13 +20,14 @@
 </ktml:module>
 
 <? if($article->isTranslatable()) : ?>
-    <ktml:module position="actionbar" content="append">
-        <?= helper('com:languages.listbox.languages') ?>
-    </ktml:module>
+<ktml:module position="actionbar" content="append">
+    <?= helper('com:languages.listbox.languages') ?>
+</ktml:module>
 <? endif ?>
 
 <form action="" method="post" id="article-form" class="-koowa-form">
     <input type="hidden" name="published" value="0" />
+    <input type="hidden" name="attachments_attachment_id" value="0" />
 
     <div class="main">
         <div class="title">
@@ -36,7 +37,7 @@
                 <input type="text" name="slug" maxlength="255" value="<?= $article->slug ?>" />
             </div>
         </div>
-        <?= object('com:ckeditor.controller.editor')->render(array('name' => 'text', 'text' => $article->text)) ?>
+        <?= object('com:ckeditor.controller.editor')->render(array('name' => 'text', 'text' => $article->text, 'attribs' => array('class' => 'ckeditor-required'))) ?>
     </div>
     <div class="sidebar no--scrollbar">
         <?= import('default_sidebar.html'); ?>

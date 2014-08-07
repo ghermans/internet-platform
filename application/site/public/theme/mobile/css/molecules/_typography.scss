@@ -10,7 +10,16 @@
   color: $blue;
   font-weight: bold;
 }
+
 .text--small {
-  font-size: 0.9em;
+  font-size: 0.85em;
   @extend .muted;
+}
+
+.muted {
+  color: $gray;
+}
+
+.text-center {
+  text-align: center;
 }

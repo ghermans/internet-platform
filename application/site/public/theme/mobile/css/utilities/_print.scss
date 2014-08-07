@@ -1,28 +1,14 @@
 /* Print stub */
 @media only print {
-  .container-header .navbar,
-  .container-copyright,
-  .pagination,
-  .st_sharethis {
+  .container__header,
+  .container__breadcrumb,
+  .container__copyright,
+  .pagination {
     display: none;
   }
 
-  .container-header .row-fluid .span3 {
-    display: block;
-    padding-left: 20px;
-    padding-top: 20px;
-
-    .logo a:after {
-      content: "";
-    }
-
-    .logo div {
-      padding-left: 50px;
-    }
-  }
-
   .article__thumbnail:after {
-    content: "" !important ;
+    content: "" !important;
   }
 
   a {

@@ -8,17 +8,14 @@
  */
 ?>
 
-<?= helper('behavior.mootools') ?>
-<?= helper('behavior.modal') ?>
-
 <? $list = (isset($row) && isset($table)) ? $attachments->find(array('row' => $row, 'table' => $table)) : $attachments ?>
 
-<? if(count($list)) : ?>
-    <ul class="thumbnails">
+<? if(count($list) > '1' || (count($list) == '1' && reset($exclude) == '0')) : ?>
+    <ul class="gallery">
         <? foreach($list as $item) : ?>
             <? if($item->file->isImage() && !in_array($item->id, Nooku\Library\ObjectConfig::unbox($exclude))) : ?>
-                <li class="span3">
-                    <a onClick="_gaq.push(['_trackEvent', 'Attachments', 'Modalbox', 'Image']);" class="thumbnail modal" href="attachments://<?= $item->path; ?>" rel="{handler: 'image'}">
+                <li class="gallery__item">
+                    <a onClick="ga('send', 'event', 'Attachments', 'Modalbox', 'Image');" class="thumbnail" data-gallery="enabled" href="attachments://<?= $item->path; ?>">
                         <img width="640px" src="attachments://<?= $item->thumbnail ?>" />
                     </a>
                 </li>
@@ -29,7 +26,7 @@
     <ul>
         <? foreach($list as $item) : ?>
             <? if(!$item->file->isImage()) : ?>
-                <li><a onClick="_gaq.push(['_trackEvent', 'Attachments', 'Download', '<?=escape($item->name)?>']);" href="attachments://<?= $item->path; ?>"><?= escape($item->name) ?></a> (<?= helper('com:files.filesize.humanize', array('size' => $item->file->size));?>, <?= $item->file->extension ?>)</li>
+                <li><a onClick="ga('send', 'event', 'Attachments', 'Download', '<?=escape($item->name)?>');" href="attachments://<?= $item->path; ?>"><?= escape($item->name) ?></a> (<?= helper('com:files.filesize.humanize', array('size' => $item->file->size));?>, <?= $item->file->extension ?>)</li>
             <? endif ?>
         <? endforeach ?>
     </ul>

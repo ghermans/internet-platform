@@ -1,69 +1,92 @@
-.container-header .row-fluid .span3,
-.container-header .slogan,
-.container-breadcrumb,
-.container-banner,
-.container-footer,
-.container-quicklinks,
-.container-content .sidebar,
-.container-copyright .copyright,
+.container__header .slogan,
+.container__content .sidebar,
 .is-hidden,
 .hidden-phone {
   display: none;
 }
 
-.container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.container-content {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.container-header {
+.container__header {
   margin-bottom: 0;
   padding-left: 0;
   padding-right: 0;
   width: 100%;
 }
 
-.container-content {
-  padding-top: $gridGutterWidth;
-  margin-bottom: $gridGutterWidth;
+.container__breadcrumb {
+  font-size: 0.85em;
+  line-height: 1.5em;
 
-  &.police {
-    .contact__inner {
-      margin-left: 0;
-      border: 0 none;
-      padding: 0;
+  padding: 10px 10px 5px;
+  margin: 0;
+  background-color: $color-background-well;
+  border-bottom: 1px solid #eee;
 
-     a {
-         text-decoration: none;
-     }
-    }
+  @include clearfix();
 
-    article {
-      border: 0 none !important;
-      padding-bottom: 0 !important;
-    }
+  ul {
+    margin: 0;
+    list-style: none;
+  }
+
+  @include respond-min($breakpoint-charlie) {
+    padding: 5px $grid-padding 0;
   }
 }
 
-.container-copyright {
-  padding: 3px 20px;
-  text-align: center;
-  border-top: 1px solid darken($grayLighter, 7%);
-  font-size: $fontSizeSmall;
+.container__content {
+  padding-top: $grid-padding;
+  padding-bottom: $grid-padding;
+  padding-left: 20px;
+  padding-right: 20px;
 
-    a {
-      text-decoration: none;
-    }
+  &.homepage {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+  }
 }
 
-.container-footer {
-  .media {
-    margin-top: 0;
-    margin-bottom: $gridGutterWidth / 1.5;
+.container__copyright {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  text-align: center;
+  border-top: 1px solid darken($color-border, 7%);
+  font-size: 0.85em;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.container__footer {
+  @include clearfix();
+
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: $gutter-width / 2;
+  background-color: $color-background-well;
+  border-top: 1px solid darken($color-border, 7%);
+
+  .container__quicklinks {
+    div {
+      margin-bottom: $grid-padding;
+    }
+  }
+
+  .footer__districts {
+    margin-bottom: $grid-padding;
+  }
+}
+
+.container__footer_menu {
+  border-top: 1px solid darken($color-border, 7%);
+
+  ul {
+    margin: 0;
+
+    li a {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
 }

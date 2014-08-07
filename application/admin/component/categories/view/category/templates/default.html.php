@@ -19,10 +19,17 @@
     <ktml:toolbar type="actionbar">
 </ktml:module>
 
+<? if($category->isTranslatable()) : ?>
+<ktml:module position="actionbar" content="append">
+    <?= helper('com:languages.listbox.languages') ?>
+</ktml:module>
+<? endif ?>
+
 <form action="" method="post" class="-koowa-form" id="category-form">
     <input type="hidden" name="access" value="0" />
     <input type="hidden" name="published" value="0" />
     <input type="hidden" name="table" value="<?= $state->table ?>" />
+    <input type="hidden" name="attachments_attachment_id" value="0" />
     
     <div class="main">
 		<div class="title">

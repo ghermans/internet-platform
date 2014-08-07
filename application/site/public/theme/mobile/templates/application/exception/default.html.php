@@ -8,7 +8,11 @@
  */
 ?>
 
-<? $zone = object('com:police.model.zone')->id($site)->getRow() ?>
+<?
+    $zone = object('com:police.model.zone')->id($site)->getRow();
+    $language_short = explode("-", $language);
+    $language_short = $language_short[0];
+?>
 
 <!DOCTYPE HTML>
 <html lang="<?= $language; ?>" dir="<?= $direction; ?>">
@@ -41,27 +45,29 @@
 </head>
 
 <body>
-<div id="wrap" class="container-fluid">
-    <div class="container-header">
-        <div class="row-fluid">
-            <div class="span3 alpha">
-                <div class="logo" itemscope itemtype="http://schema.org/Organization">
-                    <a itemprop="url" href="/<?= $site ?>">
-                        <img itemprop="logo" src="assets://application/images/logo-nl.jpg" />
-                        <div><?= escape($zone->title); ?></div>
-                    </a>
-                </div>
+<div id="wrap">
+    <div class="container container__header">
+        <div class="header">
+            <div class="organization" itemscope itemtype="http://schema.org/Organization">
+                <a itemprop="url" href="/<?= $site ?>">
+                    <div class="organization__logo organization__logo--<?= $language_short; ?>"></div>
+                    <div class="organization__name"><?= escape($zone->title); ?></div>
+                </a>
             </div>
-            <div class="span9">
-                <span class="slogan">Bel <a class="text--strong" href="tel:101">101</a> voor dringende politiehulp. Geen spoed, wél politie? Bel <a class="text--strong" href="tel:<?= escape($zone->phone_emergency); ?>"><?= escape($zone->phone_emergency); ?></a></span>
+            <div class="navigation">
+                <span class="slogan">
+                    <?= JText::sprintf('Call for urgent police assistance', '101', '101') ?>.
+                    <?= JText::sprintf('No emergency, just police', escape(str_replace(' ', '', $zone->phone_emergency)), escape($zone->phone_emergency)) ?>.
+                </span>
             </div>
         </div>
     </div>
 
-    <div class="container-content">
+    <div class="container container__content">
         <h1><?= translate('Page not found') ?> - <?= $code ?></h1>
-        <div class="row-fluid">
-            <div class="span7 alpha component">
+
+        <div class="exception">
+            <div class="exception__message component">
                 <p><strong><?= translate('You may not be able to visit this page because of'); ?>:</strong></p>
                 <ul>
                     <li><?= translate('An out-of-date bookmark/favourite'); ?></li>
@@ -76,25 +82,23 @@
                     <li><a href="/<?= $site ?>/contact" title="<?= translate('Contact'); ?>"><?= translate('Contact'); ?></a></li>
                 </ul>
             </div>
-            <div class="span5">
+            <div class="exception__image">
                 <img class="thumbnail" src="assets://application/images/error.jpg" />
             </div>
         </div>
-        <div class="row-fluid text-center" style="margin-top: 30px">
-            <a class="btn btn-large" href="/<?= $site ?>" title="<?= translate('Home Page'); ?>"><?= translate('Home Page'); ?></a>
+
+        <div class="text-center" style="margin-top: 30px; clear: both">
+            <a class="button button--primary button--large" href="/<?= $site ?>" title="<?= translate('Home Page'); ?>"><?= translate('Home Page'); ?></a>
         </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="backtrace">
-                    <button id="backtrace__button" class="btn btn-small btn-link" onclick="toggleBacktrace()" data-text-less="<?= translate('Less') ?>" data-text-more="<?= translate('More') ?>">More</button>
-                </div>
-                <div id="backtrace__info" class="is-hidden">
-                    <? if(count($trace)) : ?>
-                        <?= import('default_backtrace.html'); ?>
-                    <? endif; ?>
-                </div>
-            </div>
+
+        <? if(count($trace)) : ?>
+        <div class="backtrace">
+            <button id="backtrace__button" class="button--link" onclick="toggleBacktrace()" data-text-less="<?= translate('Less') ?>" data-text-more="<?= translate('More') ?>"><?= translate('More') ?></button>
         </div>
+        <div id="backtrace__info" class="is-hidden">
+            <?= import('default_backtrace.html'); ?>
+        </div>
+        <? endif; ?>
     </div>
 </div>
 

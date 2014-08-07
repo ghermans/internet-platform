@@ -15,7 +15,15 @@ use Nooku\Library;
  * @author  Johan Janssens <http://nooku.assembla.com/profile/johanjanssens>
  * @package Component\Contacts
  */
-class ContactsControllerCategory extends CategoriesControllerCategory
-{    
+class ContactsControllerCategory extends PoliceControllerLanguage
+{
+    public function getRequest()
+    {
+        $request = parent::getRequest();
 
+        //Display only published items
+        $request->query->published = 1;
+
+        return $request;
+    }
 }

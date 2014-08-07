@@ -1,8 +1,8 @@
-@import "../../../../../../vendor/jlong/sass-twitter-bootstrap/lib/variables"; // Modify this for custom colors, font-sizes, etc
+@import "illusion/basics";
 @import "utilities/_variables";
 
 body {
-  width: 600px;
+  width: $breakpoint-beta;
   margin: 0 auto;
 }
 
@@ -26,6 +26,54 @@ form {
   padding-top: 10px; // IE6
 }
 
-.media .media-object {
-    width: 64px; // IE7, otherwise the media object gets a 100% width
+// Right alignment of the thumbnail, on mobile it is on top
+.article__thumbnail {
+  float: right;
+  width: 200px;
+  height: 150px;
+  margin: 0 0 $line-height $line-height;
+
+  img {
+    width: 100%; // IE6
+    height: 100%; // IE6
+  }
+}
+
+.homepage__sticky,
+.footer__news {
+  .media__object {
+    img {
+      width: 100%; // IE6
+      height: 100%; // IE6
+    }
+  }
+}
+
+.button--hamburger {
+  display: none;
+}
+
+// Horizontal align the footer menu items
+.navbar {
+  ul li {
+    float: left;
+  }
+  ul li a {
+    text-align: center;
+    border: 0 none;
+    font-weight: normal;
+    padding: 10px 30px;
+  }
+}
+
+// Always show the navbar
+.js-enabled .navbar {
+  @include visually-shown;
+}
+
+// Horizontal align the footer menu items
+.container__footer_menu {
+  li {
+    float: left;
+  }
 }

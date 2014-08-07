@@ -1,38 +1,35 @@
 .article {
   @extend .clearfix;
-  margin-bottom: $gridGutterWidth;
-
-  h2 { margin-top: 30px; }
-  h3 { margin-top: 20px; }
+  margin-bottom: $gutter-width;
 
   p img[align="right"] {
-      margin: 0 0 20px 20px;
+    margin: 0 0 $line-height $line-height;
   }
 }
 
 .article__header {
-  margin-bottom: $gridGutterWidth / 2;
+  margin-bottom: 0.65em;
 
   h1 {
     margin-bottom: 0;
   }
-
-  .timestamp {
-    padding-top: 4px;
-    @extend .muted;
-    font-size: $fontSizeSmall;
-  }
 }
 
-.article__introtext,
-.entry-summary {
+.article__introtext {
   font-weight: bold;
-  margin-bottom: $baseLineHeight;
+  margin-bottom: $line-height;
 }
 
 .article__thumbnail {
-  float: right;
-  max-width: 40%;
-  margin: 0 0 20px 20px;
   @extend .thumbnail;
+  margin-bottom: $line-height / 2;
+}
+
+@include respond-min($breakpoint-alpha) {
+  .article__thumbnail {
+    float: right;
+    width: 40%;
+    max-width: 200px;
+    margin: 0 0 $line-height $line-height;
+  }
 }

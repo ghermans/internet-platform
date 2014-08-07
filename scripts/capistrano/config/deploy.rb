@@ -20,7 +20,7 @@ set :copy_exclude, [".git"]
 set :keep_releases, 3
 
 # Repository settings.
-set :repository, "git@git.assembla.com:timble-police.2.git"
+set :repository, "https://github.com/belgianpolice/internet-platform.git"
 set :scm, :git
 set :scm_username, "deploy@timble.net"
 
@@ -43,6 +43,14 @@ namespace :deploy do
                 run "ln -fns #{shared_path}/#{link} #{release_path}/#{link}"
             end
         end
+
+        # Symlink the Phpmig configuration file back into the phpmig directory
+        run "ln -fns #{shared_path}/scripts/phpmig/config.php #{release_path}/scripts/phpmig/config.php"
+    end
+
+    desc "Migrate database."
+    task :migrate do
+        run "cd #{release_path}/scripts/phpmig && phpmig migrate"
     end
 
     desc "Run composer"
@@ -55,37 +63,7 @@ namespace :deploy do
         run "curl -vs -o /dev/null http://localhost/apc_clear.php > /dev/null 2>&1"
     end
 
-    desc "Push local changes to Github remote"
-    task :mirror do
-        # Check for any local changes that haven't been committed
-        status = %x(git status --porcelain).chomp
-        if status != ""
-            if status !~ %r{^[M ][M ] config/deploy.rb$}
-                raise Capistrano::Error, "Local git repository has uncommitted changes"
-            end
-        end
-
-        # Check we are on the master branch
-        branch = %x(git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/').chomp
-        if branch != "master"
-            raise Capistrano::Error, "Not on master branch!"
-        end
-
-        # Make sure the github remote has been set up
-        remotes = %x(git remote show | sed 'N;s/\\n/ /;').chomp
-        if ! remotes.split(' ').include? 'github'
-            raise Capistrano::Error, "Github remote not found! Add it by executing: git remote add github git@github.com:belgianpolice/internet-platform.git"
-        end
-
-        # Push the changes
-        if ! system "git push github master"
-            raise Capistrano::Error, "Failed to push changes to github!"
-        end
-    end
-    
     # Do nothing in these tasks.
-    task :migrate do; end
-    task :migrations do; end
     task :cold do; end
     task :start do; end
     task :stop do; end
@@ -95,3 +73,4 @@ end
 after "deploy:update_code", "deploy:symlink_shared"
 after "deploy:update_code", "deploy:composer"
 after "deploy:update", "deploy:cleanup"
+after "deploy:migrate", "deploy:cleanup"

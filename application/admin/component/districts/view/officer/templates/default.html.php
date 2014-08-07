@@ -22,13 +22,13 @@
 	<div class="main">
 		<div class="scrollable">
 				<fieldset>
-					<legend><?= translate( 'Basic Information' ); ?></legend>
+					<legend><?= translate( 'Information' ); ?></legend>
 					<div>
 					    <label for="">
 					    	<?= translate( 'Firstname' ); ?>
 					    </label>
 					    <div>
-					        <input type="text" name="firstname" maxlength="250" class="required validate-alpha" value="<?= $officer->firstname; ?>" />
+					        <input type="text" name="firstname" maxlength="250" class="required" value="<?= $officer->firstname; ?>" />
 					    </div>
 					</div>
 					<div>
@@ -36,7 +36,7 @@
 					    	<?= translate( 'Lastname' ); ?>
 					    </label>
 					    <div>
-					        <input type="text" name="lastname" maxlength="250" class="required validate-alpha" value="<?= $officer->lastname; ?>" />
+					        <input type="text" name="lastname" maxlength="250" class="required" value="<?= $officer->lastname; ?>" />
 					    </div>
 					</div>
                     <div>
@@ -52,12 +52,9 @@
 					    	<?= translate( 'Position' ); ?>
 					    </label>
 					    <div>
-					        <input type="text" name="position" maxlength="250" class="validate-alpha" value="<?= $officer->position; ?>" />
+					        <input type="text" name="position" maxlength="250" value="<?= $officer->position; ?>" />
 					    </div>
 					</div>
-				</fieldset>
-				<fieldset>
-					<legend><?= translate( 'Contact information' ); ?></legend>
 					<div>
 					    <label for="">
 					    	<?= translate( 'Phone' ); ?>
@@ -104,7 +101,9 @@
                     <? if (!$officer->isNew()) : ?>
                         <?= import('com:attachments.view.attachments.list.html', array('attachments' => $officer->getAttachments(), 'attachments_attachment_id' => $officer->attachments_attachment_id)) ?>
                     <? endif ?>
+                    <? if(!count($officer->getAttachments())) : ?>
                     <?= import('com:attachments.view.attachments.upload.html') ?>
+                    <? endif ?>
                 </fieldset>
             <? endif ?>
 		</div>

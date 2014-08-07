@@ -25,7 +25,8 @@
     <div>
         <label for="created_on"><?= translate('Created on') ?></label>
         <div class="controls">
-            <input type="datetime-local" name="created_on" value="<?= helper('date.format', array('date'=> $article->ordering_date, 'format' => 'Y-m-d\TH:i:s')) ?>" />
+            <input id="created_on" type="text" name="created_on" value="<?= helper('date.format', array('date'=> $article->ordering_date, 'format' => 'd-m-Y H:i')) ?>" />
+            <script data-inline> $jQuery("#created_on").datetimepicker({format:'d-m-Y H:i', lang: '<?= $this->getObject('application.languages')->getActive()->slug; ?>', dayOfWeekStart: '1'}); </script>
         </div>
     </div>
 </fieldset>
@@ -37,18 +38,5 @@
             <?= import('com:attachments.view.attachments.list.html', array('attachments' => $article->getAttachments(), 'attachments_attachment_id' => $article->attachments_attachment_id)) ?>
         <? endif ?>
         <?= import('com:attachments.view.attachments.upload.html') ?>
-    </fieldset>
-<? endif ?>
-
-<? if($article->isTranslatable()) : ?>
-    <fieldset>
-        <legend><?= translate('Translations') ?></legend>
-        <? $translations = $article->getTranslations() ?>
-        <? foreach($article->getLanguages() as $language) : ?>
-            <?= $language->name.':' ?>
-            <? $translation = $translations->find(array('iso_code' => $language->iso_code)) ?>
-            <?= helper('com:languages.grid.status',
-                array('status' => $translation->status, 'original' => $translation->original, 'deleted' => $translation->deleted)) ?>
-        <? endforeach ?>
     </fieldset>
 <? endif ?>

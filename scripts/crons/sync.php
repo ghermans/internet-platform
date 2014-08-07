@@ -48,23 +48,23 @@ foreach(glob("*.sql") as $file)
 {
     $database = substr($file, 0, -4);
 
-    echo "Creating database " . $database . PHP_EOL;
+    echo "Drop existing database " . $database . PHP_EOL;
+    exec("mysql -u".escapeshellarg($config->user)." -p".escapeshellarg($config->password)." -e 'DROP DATABASE IF EXISTS `".$database."`;'");
+
+    echo "Re-creating database " . $database . PHP_EOL;
     exec("mysql -u".escapeshellarg($config->user)." -p".escapeshellarg($config->password)." -e 'CREATE DATABASE IF NOT EXISTS `".$database."`;'");
 
     echo "Importing " . $file . PHP_EOL;
     exec("mysql -u".escapeshellarg($config->user)." -p".escapeshellarg($config->password)." ".$database." < " . $file);
 }
 
+// Execute the migrations that might 've been enabled on staging already
+echo "-- Running phpmig migrate".PHP_EOL;
+exec('cd /var/www/v2.lokalepolitie.be/capistrano/current/scripts/phpmig/ && phpmig migrate');
+
 // Now rsync the source files
 echo "-- Syncing shared folders".PHP_EOL;
 exec('rsync --rsh "ssh -p 9999" deploy@172.18.150.10:/var/www/v2.lokalepolitie.be/capistrano/shared/ /var/www/v2.lokalepolitie.be/capistrano/shared/ --delete --update --perms --owner --group --recursive --times --links');
-
-// Make sure to copy over the variable nginx configuration files
-echo "-- Updating Nginx configuration".PHP_EOL;
-$files = array('v2.inc', 'v2.stage.inc', 'redirect.inc');
-foreach($files as $file) {
-    exec('scp -P 9999 deploy@172.18.150.10:/etc/nginx/conf.d/' . $file . ' /etc/nginx/conf.d/' . $file);
-}
 
 // Get rid of our temporary directories and files
 chdir('/tmp/');

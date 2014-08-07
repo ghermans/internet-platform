@@ -10,9 +10,18 @@
 
 <?= helper('behavior.validator'); ?>
 
+<script src="assets://news/js/jquery.datetimepicker.js" />
+<style src="assets://news/css/jquery.datetimepicker.css" />
+
 <ktml:module position="actionbar">
     <ktml:toolbar type="actionbar">
 </ktml:module>
+
+<? if($article->isTranslatable()) : ?>
+<ktml:module position="actionbar" content="append">
+    <?= helper('com:languages.listbox.languages', array('attribs' => array('disabled' => 'true'))) ?>
+</ktml:module>
+<? endif ?>
 
 <!--
 <script src="assets://js/koowa.js" />
@@ -30,9 +39,9 @@
             </div>
         </div>
 		
-		<?= object('com:ckeditor.controller.editor')->render(array('name' => 'text', 'text' => $article->text)) ?>
+		<?= object('com:ckeditor.controller.editor')->render(array('name' => 'text', 'text' => $article->text, 'removeButtons' => 'readmore')) ?>
 	</div>
-	<div class="sidebar">
+	<div class="sidebar" style="padding-bottom: 200px">
         <?= import('default_sidebar.html') ?>
     </div>
 </form>

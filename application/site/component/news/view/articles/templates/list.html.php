@@ -12,7 +12,7 @@
 
 <? foreach ($articles as $article) : ?>
     <? $link = '/'.$site.'/'.object('lib:filter.slug')->sanitize(translate('News')).'/'.$article->id.'-'.$article->slug ?>
-    <div class="media<?= !$article->attachments_attachment_id ? ' media--imageless' : ''; ?>">
+    <div class="media">
         <? if($article->attachments_attachment_id): ?>
             <a tabindex="-1" class="thumbnail media__object" href="<?= $link ?>">
                 <?= helper('com:attachments.image.thumbnail', array(
@@ -22,7 +22,7 @@
         <? endif; ?>
         <div class="media__body">
             <a class="media__heading" href="<?= $link ?>"><?= $article->title ?></a>
-            <div class="muted" style="font-size: 0.85em">
+            <div class="text--small">
                 <?= helper('date.format', array('date'=> $article->ordering_date, 'format' => translate('DATE_FORMAT_LC5'))) ?>
             </div>
         </div>

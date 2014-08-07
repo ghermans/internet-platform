@@ -21,7 +21,8 @@
 <? endif ?>
 
 <? if($state->category OR $state->searchword) : ?>
-<ul class="nav nav-pills nav-stacked nav--visited">
+<? if(count($questions)) : ?>
+<ul class="nav nav--pills nav--visited">
 <? foreach ($questions as $question) : ?>
     <li>
         <a href="<?= helper('route.question', array('row' => $question)) ?>">
@@ -30,8 +31,11 @@
     </li>
 <? endforeach; ?>
 </ul>
+    <? else : ?>
+    <h2 id="no-results"><?= translate('No results found') ?>.</h2>
+    <? endif ?>
 <? else : ?>
-   <ul class="nav nav-pills nav-stacked column--double">
+   <ul class="nav nav--pills column--double">
         <? foreach ($categories as $category): ?>
             <li>
                 <a href="<?= helper('route.category', array('row' => $category)) ?>">
@@ -46,4 +50,12 @@
 <?= helper('com:application.paginator.pagination', array('total' => $total, 'show_count' => false, 'show_limit' => false)) ?>
 <? endif ?>
 
+<? if(object('application')->getCfg('site') != '5396') : ?>
 <?= import('default_contact.html') ?>
+<? endif ?>
+
+<script data-inline>
+    if(document.getElementById('no-results')) {
+        ga('send', 'event', 'Questions','No results found','<?= $state->searchword ?>');
+    }
+</script>

@@ -1,8 +1,14 @@
+@import "utilities/variables";
+
 $old-ie: true;
-$fix-mqs: 998px;
+$fix-mqs: $breakpoint-delta;
 @import 'default';
 
-.container-header {
+#wrap {
+  width: 942px;
+}
+
+.container__header {
   .nav li {
     display: block;
     float: left;
@@ -10,21 +16,8 @@ $fix-mqs: 998px;
   }
 }
 
-.container-footer {
+.container__footer {
   input {
     width: 188px;
   }
 }
-
-.span1,
-.span2,
-.span3,
-.span4,
-.span5,
-.span6,
-.span7,
-.span8,
-.span9,
-.span10,
-.span11,
-.span12 { float:left; margin-left: $gridGutterWidth; display:inline; }

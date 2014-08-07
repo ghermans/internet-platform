@@ -12,9 +12,9 @@
 
 CKEDITOR.editorConfig = function( config ) {
 
-	// Define changes to default configuration here. For example:
-	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
+    // Define changes to default configuration here. For example:
+    // config.language = 'fr';
+    // config.uiColor = '#AADC6E';
 
     config.extraPlugins = 'codemirror,readmore,images,onchange,files';
     // wee need to remove the default image and link plugins for the custom plugin's to work properly
@@ -41,7 +41,7 @@ CKEDITOR.editorConfig = function( config ) {
     };
 
     // Pasting operations will loose any formatting information in the source text.
-    config.forcePasteAsPlainText = true,
+    config.forcePasteAsPlainText = true;
 
     config.allowedContent = true;
     config.toolbar_full =
@@ -74,7 +74,7 @@ CKEDITOR.editorConfig = function( config ) {
             { name: 'basicstyles', items: [ 'Bold', 'Italic' ] },
             { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' ] },
             { name: 'links', items: [ 'readmore' ] },
-            { name: 'insert', items: [ 'images', 'files','Link','Unlink' ,'Table' ] },
+            { name: 'insert', items: [ 'images', 'files','Link','Unlink','Anchor','Table' ] },
             { name: 'clipboard', items: [ 'PasteText', '-', 'Undo', 'Redo' ] },
             { name: 'document', items: [ 'Source' ] }
         ];
@@ -82,4 +82,42 @@ CKEDITOR.editorConfig = function( config ) {
         [
             ['Undo','Redo']
         ];
+
+    CKEDITOR.on('instanceReady', function (ev) {
+        ev.editor.dataProcessor.htmlFilter.addRules(
+            {
+                elements:
+                {
+                    $: function (element) {
+                        // Add dimensions of images as width and height property instead of style
+                        if (element.name == 'img') {
+                            var style = element.attributes.style;
+
+                            if (style) {
+                                // Get the width from the style.
+                                var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style),
+                                    width = match && match[1];
+
+                                // Get the height from the style.
+                                match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+                                var height = match && match[1];
+
+                                if (width) {
+                                    element.attributes.width = width;
+                                }
+
+                                if (height) {
+                                    element.attributes.height = height;
+                                }
+                            }
+                        }
+
+                        if (!element.attributes.style)
+                            delete element.attributes.style;
+
+                        return element;
+                    }
+                }
+            });
+    });
 };

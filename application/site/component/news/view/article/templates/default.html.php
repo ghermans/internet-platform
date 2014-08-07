@@ -8,10 +8,22 @@
  */
 ?>
 
+<meta content="<?= @translate('Police') ?> <?= $zone->title ?>" name="author" />
+<? if($zone->twitter) : ?>
+<meta content="summary" name="twitter:card" />
+<meta content="@<?= $zone->twitter ?>" name="twitter:site" />
+<? endif ?>
+<meta content="<?= url(); ?>" property="og:url" />
+<meta content="<?= $article->title ?>" property="og:title" />
+<meta content="<?= trim(preg_replace('/\s+/', ' ', strip_tags($article->introtext))) ?>" property="og:description" />
+<? if($article->attachments_attachment_id) : ?>
 <meta content="http://<?= $url ?>attachments://<?= $thumbnail ?>" property="og:image" />
+<? endif ?>
+
+<meta content="<?= $published_on ?>" property="article:published_time" />
 
 <ktml:module position="left">
-    <? $modules = object('com:pages.model.modules')->position('quicklinks')->getRowset(); ?>
+    <? $modules = object('com:pages.model.modules')->position('quicklinks')->published('true')->getRowset(); ?>
 
     <? foreach($modules as $module) : ?>
         <div class="sidebar__element">
@@ -21,33 +33,43 @@
     <? endforeach ?>
 </ktml:module>
 
-<script type="text/javascript">var switchTo5x=true;</script>
-<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">stLight.options({publisher:'91c73e48-a5e0-43ea-988f-57d099f878c7'});</script>
-
 <title content="replace"><?= $article->title ?></title>
 
-<article class="article hentry">
+<article class="article" itemscope itemtype="http://schema.org/Article">
     <header class="article__header">
-        <h1 class="entry-title"><?= $article->title ?></h1>
-        <span class="timestamp">
+        <h1 itemprop="name"><?= $article->title ?></h1>
+        <time class="text--small" itemprop="datePublished" datetime="<?= $published_on ?>">
             <?= helper('date.format', array('date'=> $article->ordering_date, 'format' => translate('DATE_FORMAT_LC5'), 'attribs' => array('class' => 'published'))) ?>
-        </span>
-        <span style="float:right" class='st_sharethis' displayText='ShareThis'></span>
+        </time>
     </header>
 
     <? if($article->attachments_attachment_id) : ?>
-    <figure class="article__thumbnail">
-    <?= helper('com:attachments.image.thumbnail', array(
+    <a onClick="ga('send', 'event', 'Attachments', 'Modalbox', 'Image');" class="article__thumbnail" href="attachments://<?= $thumbnail ?>" data-gallery="enabled">
+        <?= helper('com:attachments.image.thumbnail', array(
         'attachment' => $article->attachments_attachment_id,
-        'attribs' => array('width' => '200', 'height' => '150'))) ?>
-    </figure>
+        'attribs' => array('width' => '400', 'height' => '300', 'itemprop'=> "image"))) ?>
     <? endif ?>
+    </a>
 
-    <div class="entry-summary"><?= $article->introtext ?></div>
-    <div class="entry-content"><?= $article->fulltext ?></div>
-
-    <div class="entry-content-asset">
+    <div itemprop="articleBody">
+        <div<?= $article->fulltext ? ' class="article__introtext"' : '' ?>>
+            <?= $article->introtext ?>
+        </div>
+        <?= $article->fulltext ?>
         <?= import('com:attachments.view.attachments.default.html', array('attachments' => $attachments, 'exclude' => array($article->attachments_attachment_id))) ?>
     </div>
 </article>
+
+<script src="assets://application/components/jquery/dist/jquery.min.js" />
+<script src="assets://application/components/magnific-popup/dist/jquery.magnific-popup.min.js" />
+<script data-inline>
+    $(document).ready(function() {
+        // This will create a single gallery from all elements that have class data-gallery="enabled"
+        $('[data-gallery="enabled"]').magnificPopup({
+            type: 'image',
+            gallery:{
+                enabled:true
+            }
+        });
+    });
+</script>

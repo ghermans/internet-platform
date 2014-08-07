@@ -13,7 +13,7 @@
 <h1 class="article__header"><?= escape($params->get('page_title')); ?></h1>
 
 <form action="" method="get" class="-koowa-form">
-    <table class="table table-striped">
+    <table class="table table--striped">
         <thead>
         <tr>
             <th style="width: 70%"><?=translate('Name')?></th>
@@ -37,7 +37,7 @@
                     <i class="icon-file"></i>
                     <a class="files-download" data-path="<?= escape($file->path); ?>"
                        href="<?= route('&view=file&folder='.$state->folder.'&name='.$file->name);?>"
-                       onClick="_gaq.push(['_trackEvent', 'Downloads', 'Download', '<?=escape($file->display_name)?>']);">
+                       onClick="ga('send', 'event', 'Downloads', 'Download', '<?=escape($file->display_name)?>');">
                         <?=escape($file->display_name)?>
                         <span class="text--small">(<?= $file->extension; ?>, <?= helper('com:files.filesize.humanize', array('size' => $file->size));?>)</span>
                     </a>

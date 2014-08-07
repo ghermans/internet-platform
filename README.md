@@ -13,7 +13,7 @@ Check this website at [www.lokalepolitie.be/leuven](http://www.lokalepolitie.be/
 
 ## Installation
 
-You can run the project with the supplied Vagrantfile - make sure you understand what [Vagrant](http://vagrantup.com/) is.
+You can run the project easily with the supplied Vagrantfile - make sure you understand what [Vagrant](http://vagrantup.com/) is.
 
 * Install [Composer](http://getcomposer.org/doc/00-intro.md)
 * Install [VirtualBox](http://www.virtualbox.org/)
@@ -22,12 +22,24 @@ You can run the project with the supplied Vagrantfile - make sure you understand
     ```$ git clone https://github.com/belgianpolice/internet-platform.git```
 * Go to the repository folder where this README is located and bootup the server
     ```$ vagrant up```
-* Go to the following folder ```$ cd install/custom```
-* Install the dependencies by running Composer: ```$ composer install```
 * Add the following line to your hosts file
     ```192.168.52.10 police.dev phpmyadmin.police.dev```
+* You can now access the sample site at [police.dev/9999](http://police.dev/9999)!
 
 Note: Linux users need to install NFS (Network File System) manually, see [help.ubuntu.com](http://help.ubuntu.com/community/SettingUpNFSHowTo) for more information.
+
+### Development dependencies
+
+* Install [node.js](http://nodejs.org/)
+* Install [Grunt](http://gruntjs.com/) by running ```npm install -g grunt-cli```
+* Go to the repository folder where the README is located
+* Install project dependencies with ```npm install```
+* Run Grunt with ```grunt```
+
+### Live Reload
+
+* Install the [LiveReload browser plug-in](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions)
+* Restart the browser and click the LiveReload icon to activate it.
 
 
 ## Vagrant command-line interface
@@ -39,7 +51,7 @@ You can use the following commands to manage the server:
 * ```vagrant reload``` reboots the server
 * ```vagrant halt``` powers the server down
 * ```vagrant suspend``` & ```vagrant resume``` to make the server sleep/wake up
-* ```vangrant destroy``` to stop and destroy all resources of the server
+* ```vagrant destroy``` to stop and destroy all resources of the server
 
 More information about the Vagrant command-line interface can be found at [docs.vagrantup.com](http://docs.vagrantup.com/v2/cli/index.html).
 
@@ -48,20 +60,31 @@ More information about the Vagrant command-line interface can be found at [docs.
 
 You can use the following commands to manage the platform:
 
-* ```police reinstall``` to re-create the database
+* ```police reinstall``` to re-create the sample site.
 
 First use the Vagrant command-line interface to access the Secure Shell, see above.
+
+## Database migrations
+
+Database migrations are being managed using [Phpmig](https://github.com/davedevelopment/phpmig). 
+
+The vagrant box will setup everything for you. To make sure you have applied the latest database changes, browse to ```cd <repo>/scripts/phpmig``` and execute ```bin/phpmig migrate```.
+
+To see a list of all migrations and their status, run ```bin/phpmig status```. Use the ```bin/phpmig up <migration ID>```and ```bin/phpmig down <migration ID>``` commands to apply or undo specific migrations.
+
+For more information, please refer to the [Phpmig GitHub page](https://github.com/davedevelopment/phpmig).
 
 
 ## Access
 
-* The site application is available at [http://police.dev/5388](http://police.dev/5388).
-* The admin application is available at [http://police.dev/administrator/5388](http://police.dev/administrator/5388).
+* The example site application is available at [http://police.dev/9999](http://police.dev/9999).
+* The example admin application is available at [http://police.dev/administrator/9999](http://police.dev/administrator/9999).
 
     ```
     email: admin@localhost.home
     password: admin
     ```
+* MailCatcher is available at [http://police.dev:1080/](http://police.dev:1080/)
 
 ## Benefits
 
@@ -85,24 +108,43 @@ First use the Vagrant command-line interface to access the Secure Shell, see abo
 The Police Internet Platform is built on open source software and wouldn't be as productive without these open source projects around.
 We simply just want to say thank you to the following projects for helping us out:
 
+* [Apollo](https://github.com/toddmotto/apollo)
 * [Bootstrap](http://getbootstrap.com)
+* [Bower](http://bower.io/)
 * [Capistrano](http://www.capistranorb.com)
 * [Composer](http://getcomposer.org)
+* [Elasticsearch](http://www.elasticsearch.org/)
+* [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 * [Git](http://git-scm.com)
+* [Grunt](http://gruntjs.com/)
+* [HTML5 Shiv](https://github.com/aFarkas/html5shiv)
 * [Imagine](https://github.com/avalanche123/Imagine)
 * [Joomla](http://www.joomla.org)
 * [jQuery](http://jquery.com)
 * [Linux](http://linux.org)
+* [Magnific-Popup](https://github.com/dimsemenov/Magnific-Popup)
+* [MailCatcher](https://github.com/sj26/mailcatcher)
 * [MooTools](http://mootools.net)
 * [nginx](http://nginx.org)
 * [Nooku](http://www.nooku.org)
 * [PageSpeed](http://developers.google.com/speed/pagespeed)
 * [PHP](http://php.net)
 * [PHP-JWT](http://github.com/firebase/php-jwt)
+* [Phpmig](https://github.com/davedevelopment/phpmig)
+* [Placeholders.js](https://github.com/jamesallardice/Placeholders.js/)
 * [Sass](http://sass-lang.com)
 * [Select2](http://ivaynberg.github.io/select2)
+* [Susy](http://susy.oddbird.net/)
 * [Vagrant](http://www.vagrantup.com)
 * [VirtualBox](http://www.virtualbox.org)
+
+
+## Open Data resources
+
+The Police Internet Platform leverages open data resources and and wouldn't be as productive without these open data projects.
+We simply just want to say thank you to the following projects for helping us out:
+
+* [Flemish Geographical Information Agency](https://www.agiv.be/)
 
 
 ## How to contribute?
